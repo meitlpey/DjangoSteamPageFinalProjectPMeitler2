@@ -1,10 +1,114 @@
+<!-- templates/registration/signup.html -->
 <!DOCTYPE html>
+<center>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #001eff, #ff2cdf);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .signup-container {
+            background-color: #2d2d2d;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Open Sans', sans-serif; /* Add your chosen font */
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 3); /* Add text shadow */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #001EFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0017C6;
+        }
+
+        .back-to-login {
+            margin-top: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #00b000;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-login:hover {
+            background-color: #007c00;
+        }
+    </style>
+    <!-- Link to Google Fonts to import the Open Sans font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
 </head>
 <body>
+    <h1>Peyton Meitler's Steam Stats Page</h1>
+    <br>
+    <div class="signup-container">
+        <h1>Sign Up</h1>
 
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            {{ form.username.errors }}
+            <label for="{{ form.username.id_for_label }}">Username:</label>
+            <input type="text" name="{{ form.username.name }}" value="{{ form.username.value }}" required>
+
+            {{ form.password.errors }}
+            <label for="{{ form.password.id_for_label }}">Password:</label>
+            <input type="password" name="{{ form.password.name }}" value="{{ form.password.value }}" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <a href="{% url 'login' %}" class="back-to-login">Login</a>
+    </div>
 </body>
+</center>
 </html>
