@@ -6,7 +6,7 @@ from django.contrib import messages
 from .forms import SignUpForm
 
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -24,7 +24,9 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+            print("Form is valid")  # Add this line for debugging
             form.save()
+            print("User saved")  # Add this line for debugging
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(request, username=username, password=password)

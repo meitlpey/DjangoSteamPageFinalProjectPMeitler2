@@ -96,13 +96,20 @@
 
         <form method="post" action="{% url 'signup' %}">
             {% csrf_token %}
+
+            {{ form.non_field_errors }} {# Display non-field errors #}
+
             {{ form.username.errors }}
             <label for="{{ form.username.id_for_label }}">Username:</label>
             <input type="text" name="{{ form.username.name }}" value="{{ form.username.value }}" required>
 
-            {{ form.password.errors }}
-            <label for="{{ form.password.id_for_label }}">Password:</label>
-            <input type="password" name="{{ form.password.name }}" value="{{ form.password.value }}" required>
+            {{ form.password1.errors }}
+            <label for="{{ form.password1.id_for_label }}">Password:</label>
+            <input type="password" name="{{ form.password1.name }}" value="{{ form.password1.value }}" required>
+
+            {{ form.password2.errors }}
+            <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+            <input type="password" name="{{ form.password2.name }}" value="{{ form.password2.value }}" required>
 
             <button type="submit">Sign Up</button>
         </form>
