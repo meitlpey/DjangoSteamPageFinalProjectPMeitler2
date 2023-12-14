@@ -9,13 +9,27 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom right, #001eff, #ff2cdf);
+            background: linear-gradient(to bottom right,
+            #ff0000 0%, #ff8800 16.66%, #ffff00 33.33%,
+            #00ff00 50%, #0000ff 66.66%, #730073 83.33%,
+            #ff00ff 100%);
             margin: 0;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            animation: gradientAnimation 30s infinite linear;
+            background-size: 600% 600%;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
         }
 
         .signup-container {
@@ -101,15 +115,15 @@
 
             {{ form.username.errors }}
             <label for="{{ form.username.id_for_label }}">Username:</label>
-            <input type="text" name="{{ form.username.name }}" value="{{ form.username.value }}" required>
+            <input type="text" name="{{ form.username.name }}" required>
 
             {{ form.password1.errors }}
             <label for="{{ form.password1.id_for_label }}">Password:</label>
-            <input type="password" name="{{ form.password1.name }}" value="{{ form.password1.value }}" required>
+            <input type="password" name="{{ form.password1.name }}" required>
 
             {{ form.password2.errors }}
             <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
-            <input type="password" name="{{ form.password2.name }}" value="{{ form.password2.value }}" required>
+            <input type="password" name="{{ form.password2.name }}" required>
 
             <button type="submit">Sign Up</button>
         </form>

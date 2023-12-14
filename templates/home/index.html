@@ -19,6 +19,20 @@
             justify-content: center;
             text-align: center; /* Center text horizontally */
             font-family: 'Arial', sans-serif; /* Apply the font family to the body */
+            background-size: 400% 400%;
+            animation: gradientAnimation 20s infinite linear;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .outer-box {
@@ -28,7 +42,7 @@
         }
 
         .box {
-            width: 200px;
+            width: 210px;
             height: 200px;
             background-color: transparent; /* Set the background color */
             border: 2px solid #626262; /* Black border for each box */
@@ -53,84 +67,140 @@
 
         .box p {
             color: white; /* Set text color to white */
+            font-weight: bold;
         }
 
         h1 {
             color: white;
             margin-top: 20px; /* Add some top margin for spacing */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 3); /* Add text shadow */
         }
     </style>
 </head>
 <body>
-    <h1><b>6th & 9th August 1945's Steam Page</b></h1>
+    <h1 style="color:white"><b>
+        {% if steam_data.response.players %}
+            {{ steam_data.response.players.0.personaname }}'s Account
+        {% else %}
+            N/A
+        {% endif %}
+    </b></h1>
     <br>
     <div class="outer-box">
         <div class="box">
-            <p>User Steam Level</p>
+            <p>My Current Steam Status:</p>
             <div class="box2">
-                <h3 style="color:white"><b>11</b></h3>
+                <h3 style="color:white"><b>
+                    {% if steam_data.response.players.0.personastate == 0 %}
+                        <p style="color: red"><br> Offline </p>
+                    {% elif steam_data.response.players.0.personastate == 1 %}
+                        <p style="color: #00ff00"><br> Online </p>
+                    {% elif steam_data.response.players.0.personastate == 2 %}
+                        <p style="color: yellow"><br> Busy </p>
+                    {% elif steam_data.response.players.0.personastate == 3 %}
+                        <p style="color: #ff0000"><br> Away </p>
+                    {% elif steam_data.response.players.0.personastate == 4 %}
+                        <p style="color: mediumpurple"><br> Snooze </p>
+                    {% elif steam_data.response.players.0.personastate == 5 %}
+                        <p style="color: #ff2cdf"><br> Looking to Trade </p>
+                    {% elif steam_data.response.players.0.personastate == 6 %}
+                        <p style="color: #ff8800"><br> Looking to Play </p>
+                    {% else %}
+                        Unknown Status
+                    {% endif %}
+                </b></h3>
             </div>
         </div>
         <div class="box">
-            <p>Recently Played Game</p>
+            <p>Account Visibility:</p>
             <div class="box2">
-                <h3 style="color:white"><b>Lethal Company</b></h3>
+                <h3 style="color:white"><b>
+                    {% if steam_data.response.players %}
+                        {% if steam_data.response.players.0.communityvisibilitystate == 3 %}
+                            <p style="color: #00ff00"><br> Public </p>
+                        {% elif steam_data.response.players.0.communityvisibilitystate == 1 %}
+                            <p style="color: #ff0000"><br> Private </p>
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </b></h3>
             </div>
         </div>
         <div class="box">
-            <p>Account Life-Time</p>
-            <div class="box2">
-                <h3 style="color:white"><b>6.3 Years</b></h3>
-            </div>
+            <p>Profile Photo:</p>
+
+                <h3 style="color:#000000"><b>
+                    {% if steam_data.response.players %}
+                        <img src="{{ steam_data.response.players.0.avatarmedium }}" alt="Avatar" width="125" height="auto" border="2px solid">
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </b></h3>
+
         </div>
     </div>
 
     <div class="outer-box">
         <div class="box">
-            <p>Profile Photo</p>
+            <p>Account Owner:</p>
             <div class="box2">
-                <h3 style="color:white"><b>N/A</b></h3>
+                <h3 style="color:white"><b>
+                    {% if steam_data.response.players %}
+                        <br>
+                        <p style="font-size:16px">
+                        {{ steam_data.response.players.0.realname }}
+                        </p>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </b></h3>
             </div>
         </div>
         <div class="box">
-            <p>Profile Visibility</p>
-            <div class="box2">
-                <h3 style="color:white"><b>Public</b></h3>
-            </div>
+            <p>Link To My Account:</p>
+                <h3 style="color:white"><b>
+                    {% if steam_data.response.players %}
+                        <br>
+                        <p style="font-size:16px">
+                            <a href="{{ steam_data.response.players.0.profileurl }}" target="_blank">
+                                <button type="button" class="btn btn-primary">Steam Profile</button>
+                            </a>
+                        </p>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </b></h3>
         </div>
-        <div class="box">
-            <p>Number of Bans</p>
-            <div class="box2">
-                <h3 style="color:#00ff00"><b>0 Bans</b></h3>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Logout
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:black"><b>Logout</b></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="{% url 'login' %}" class="btn btn-primary">Yes, Logout</a>
+                </div>
             </div>
         </div>
     </div>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Logout
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:black"><b>Logout</b></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to logout?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="{% url 'login' %}" class="btn btn-primary">Yes, Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>
+

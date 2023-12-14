@@ -9,13 +9,27 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom right, #FF2CDF, #0014FF);
+            background: linear-gradient(to bottom right,
+                #ff0000 0%, #ff8800 16.66%, #ffff00 33.33%,
+            #00ff00 50%, #0000ff 66.66%, #730073 83.33%,
+            #ff00ff 100%);
             margin: 0;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            animation: gradientAnimation 30s infinite linear;
+            background-size: 600% 600%;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
         }
 
         .login-container {

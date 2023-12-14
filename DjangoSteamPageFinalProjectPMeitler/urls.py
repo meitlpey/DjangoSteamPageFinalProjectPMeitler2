@@ -19,9 +19,10 @@ from django.urls import include, path
 from django.contrib.auth.views import LoginView, LogoutView
 from .views import user_login, signup
 
+
 urlpatterns = [
     path("", LoginView.as_view(), name="login"),
-    path('login/', user_login, name='user_login'),  # Updated the view name
+    path('login/', user_login, name='user_login'),
     path("admin/", admin.site.urls),
     path("account/", include("django.contrib.auth.urls")),
     path('home/', include('home.urls')),
